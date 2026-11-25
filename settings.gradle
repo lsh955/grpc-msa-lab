@@ -1,0 +1,4 @@
+rootProject.name = 'grpc-msa-lab'
+
+include 'member-api'
+include 'member-service'
