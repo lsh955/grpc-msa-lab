@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package member.v1;
+
+// Google이 제공하는 표준 시간 타입
+import "google/protobuf/timestamp.proto";
+
+// false면 모든 클래스가 하나의 큰 클래스 안에 중첩됨
+option java_multiple_files = true;
+// 생성될 Java 클래스 패키지
+option java_package = "io.github.lsh955.grpcmsalab.grpc.member.v1";
+// 파일 단위 메타정보 클래스 이름
+option java_outer_classname = "MemberProto";
+
+service MemberService {
+  // 회원 단건 조회
+  // GetMemberRequest : 회원 ID
+  // GetMemberResponse : 회원 정보
+  rpc GetMember(GetMemberRequest) returns (GetMemberResponse);
+}
+
+// 요청 메시지
+message GetMemberRequest {
+  int64 member_id = 1; // 조회할 회원 ID
+}
+
+// 응답 메시지
+message GetMemberResponse {
+  Member member = 1; // 조회된 회원 정보
+}
+
+// 회원 정보 (MEMBER 테이블 한 행에 대응)
+message Member {
+  int64 member_id = 1;
+  string name = 2;
+  string email = 3;
+  MemberStatus status = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+enum MemberStatus {
+  MEMBER_STATUS_UNSPECIFIED = 0;
+  MEMBER_STATUS_ACTIVE = 1;       // 활성 회원
+  MEMBER_STATUS_INACTIVE = 2;     // 비활성 회원
+}

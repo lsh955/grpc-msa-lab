@@ -25,7 +25,10 @@ dependencies {
 
 protobuf {
     plugins {
-        grpc {}
+        grpc {
+            // Spring Boot BOM에서 gRPC 버전을 읽어 protoc-gen-grpc-java에 지정
+            artifact = "io.grpc:protoc-gen-grpc-java:${dependencyManagement.importedProperties['grpc-java.version']}"
+        }
     }
 }
 
